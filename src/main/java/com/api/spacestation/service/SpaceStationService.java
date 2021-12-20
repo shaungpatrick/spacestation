@@ -50,12 +50,15 @@ public class SpaceStationService {
      * @return JSONObject for a given URL.
      */
     private String getJsonResponseFromUrl(String url) {
-        JSONObject jsonObject = null;
+        String response = null;
         try {
-            jsonObject = new JSONObject(IOUtils.toString(new URL(url), StandardCharsets.UTF_8));
+            URL apiUrl = new URL(url);
+            String apiStringResponse = IOUtils.toString(apiUrl, StandardCharsets.UTF_8);
+            JSONObject jsonObject = new JSONObject(apiStringResponse);
+            response = jsonObject.toString();
         } catch (IOException e) {
             System.out.println(e);
         }
-        return jsonObject.toString();
+        return response;
     }
 }

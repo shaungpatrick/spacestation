@@ -14,7 +14,7 @@
 	<name>spacestation</name>
 	<description>API to get information from the International Space Station</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 		<powermock.version>1.6.6</powermock.version>
 		<mockio.version>1.10.19</mockio.version>
 	</properties>
