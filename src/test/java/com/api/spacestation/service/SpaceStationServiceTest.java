@@ -7,7 +7,6 @@ import com.api.spacestation.data.WeatherData;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +16,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
+import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.*;
@@ -28,9 +28,9 @@ import static org.mockito.ArgumentMatchers.eq;
         WeatherConfig.class, SpaceStationData.class, WeatherData.class, URL.class, Gson.class})
 public class SpaceStationServiceTest {
 
-    private static String ISS_JSON_RESPONSE = "file:src/test/resources/iss_response.json";
+    private static final String ISS_JSON_RESPONSE = "file:src/test/resources/iss_response.json";
 
-    private static String WEATHER_JSON_RESPONSE = "file:src/test/resources/weather_response.json";
+    private static final String WEATHER_JSON_RESPONSE = "file:src/test/resources/weather_response.json";
 
     private SpaceStationConfig mockSpaceStationConfig;
 
@@ -82,7 +82,6 @@ public class SpaceStationServiceTest {
         assertTrue(mockSpaceStationService.getStationVisibility());
     }
 
-
     @Test
     public void testSpaceStationVisibilityIsFalse() throws Exception {
         URL mockSpaceStationApiUrl = new URL(ISS_JSON_RESPONSE);
@@ -111,41 +110,17 @@ public class SpaceStationServiceTest {
         assertFalse(mockSpaceStationService.getStationVisibility());
     }
 
-
-    @Test
-    public void testSpaceStationVisibilitySpaceStationApiResponseError() throws Exception {
-        URL mockSpaceStationApiUrl = new URL(ISS_JSON_RESPONSE);
-        URL mockWeatherApiUrl = new URL(WEATHER_JSON_RESPONSE);
+    @Test (expected = IOException.class)
+    public void testSpaceStationVisibilityIOExceptionFromUrl() throws Exception {
         PowerMockito.when(mockSpaceStationConfig.getApi()).thenReturn("");
         PowerMockito.when(mockWeatherConfig.getApi()).thenReturn("");
 
         PowerMockito.whenNew(URL.class)
                 .withParameterTypes(String.class)
                 .withArguments(anyString())
-                .thenReturn(mockSpaceStationApiUrl)
-                .thenReturn(mockWeatherApiUrl);
+                .thenThrow(new IOException());
 
-        PowerMockito.whenNew(Gson.class).withAnyArguments().thenReturn(mockGson);
-        PowerMockito.when(mockGson.fromJson(anyString(), eq(SpaceStationData.class))).thenReturn(mockSpaceStationData);
-        PowerMockito.when(mockGson.fromJson(anyString(), eq(WeatherData.class))).thenReturn(mockWeatherData);
-
-        PowerMockito.when(mockWeatherData.isAfterSunSet()).thenReturn(false);
-        PowerMockito.when(mockWeatherData.getCloudCoverage()).thenReturn(30.0);
-
-        assertFalse(mockSpaceStationService.getStationVisibility());
-
-        PowerMockito.when(mockWeatherData.isAfterSunSet()).thenReturn(true);
-        PowerMockito.when(mockWeatherData.getCloudCoverage()).thenReturn(40.0);
-
-        assertFalse(mockSpaceStationService.getStationVisibility());
+        mockSpaceStationService.getStationVisibility();
     }
 
-
-
-    @After
-    public void tearDown() throws Exception {
-
-
-
-    }
 }
