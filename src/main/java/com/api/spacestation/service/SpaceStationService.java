@@ -8,6 +8,7 @@ import com.api.spacestation.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 
 @Component
@@ -19,6 +20,13 @@ public class SpaceStationService {
     @Autowired
     private WeatherConfig weatherConfig;
 
+    private Response response;
+
+    @PostConstruct
+    public void init() {
+        response = Response.getInstance();
+    }
+
     /**
      * Check if the International Space Station is currently visible.
      *
@@ -26,11 +34,11 @@ public class SpaceStationService {
      * @throws IOException thrown if we can't get a response from the internal APIs
      */
     public boolean getStationVisibility() throws IOException {
-        SpaceStationData spaceStationData = Response.getJsonResponse(
-                spaceStationConfig.getApi(),
+        SpaceStationData spaceStationData = response.getJsonResponse(
+                spaceStationConfig.getApiUrl(),
                 SpaceStationData.class);
 
-        WeatherData weatherData = Response.getJsonResponse(weatherConfig.getApi()
+        WeatherData weatherData = response.getJsonResponse(weatherConfig.getApiUrl()
                 + "?lat=" + spaceStationData.getLatitude()
                 + "&lon=" + spaceStationData.getLongitude()
                 + "&key=" + weatherConfig.getApiKey(),

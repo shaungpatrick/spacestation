@@ -15,19 +15,20 @@ public class WeatherConfig {
 
     @NotNull
     @NotEmpty
-    private String api;
+    @Value("${WEATHER_API_URL:#{null}}")
+    private String apiUrl;
 
     @NotNull
     @NotEmpty
-    @Value("${WEATHER_API_KEY}")
+    @Value("${WEATHER_API_KEY:#{null}}")
     private String apiKey;
 
-    public String getApi() {
-        return api;
+    public String getApiUrl() {
+        return apiUrl;
     }
 
-    public void setApi(String api) {
-        this.api = api;
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
     }
 
     public String getApiKey() {

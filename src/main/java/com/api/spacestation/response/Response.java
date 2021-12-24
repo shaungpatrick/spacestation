@@ -10,11 +10,26 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class Response {
+public final class Response {
 
     private final static Logger logger = LoggerFactory.getLogger(Response.class.getName());
 
-    public static <T> T getJsonResponse(String url, Class<T> dataClass) throws IOException {
+    private Response() {}
+
+    private static volatile Response instance;
+
+    public static Response getInstance() {
+        if (instance == null) {
+            synchronized (Response.class) {
+                if (instance == null) {
+                    instance = new Response();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public <T> T getJsonResponse(String url, Class<T> dataClass) throws IOException {
         String response;
         try {
             URL apiUrl = new URL(url);
