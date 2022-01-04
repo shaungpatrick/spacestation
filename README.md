@@ -29,7 +29,7 @@ sudo systemctl restart spacestation.service
 ```
 
 ### Installation
-* RHEL and CentOS 7 or newer via EPEL
+* RHEL and CentOS 7 or newer
 ```
 sudo yum -y localinstall spacestation*.rpm
 ```
