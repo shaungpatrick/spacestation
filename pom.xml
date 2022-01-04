@@ -10,13 +10,11 @@
 	</parent>
 	<groupId>com.api</groupId>
 	<artifactId>spacestation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>spacestation</name>
 	<description>API to get information from the International Space Station</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<powermock.version>1.6.6</powermock.version>
-		<mockio.version>1.10.19</mockio.version>
 	</properties>
 
 	<dependencies>
@@ -142,17 +140,53 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.5.9</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.2.0</version>
+				<executions>
+					<execution>
+						<id>generate-rpm</id>
+						<goals>
+							<goal>rpm</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<group>Application/System</group>
+					<prefix>/com/api</prefix>
+					<mappings>
+						<mapping>
+							<directory>/com/api/spacestation</directory>
+							<filemode>755</filemode>
+							<sources>
+								<source>
+									<location>target/${project.artifactId}.jar</location>
+								</source>
+							</sources>
+						</mapping>
+					</mappings>
+					<preinstallScriptlet>
+						<scriptFile>src/main/scripts/preinstall.sh</scriptFile>
+					</preinstallScriptlet>
+					<postinstallScriptlet>
+						<scriptFile>src/main/scripts/postinstall.sh</scriptFile>
+					</postinstallScriptlet>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
