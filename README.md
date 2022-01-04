@@ -10,7 +10,7 @@ You can sign up to get your key here: https://www.weatherbit.io/account/create
 **NOTE**: Your first key is free for 30 days and can handle up to 1,000 calls/day
 
 ## Setup & Installation 
-Download the latest RPM from the list of available releases (here)
+Download the latest version of the API [here](https://github.com/ShaunGPatrick/spacestation/releases/latest)
 
 ### Environment variables
 The key for the weatherbit API can be set using the env variable ```WEATHER_API_KEY```
