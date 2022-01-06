@@ -65,7 +65,7 @@ To check if the International Space Station is currently visible, use this endpo
 http://localhost:8080/space-station/is-visible
 ```
 
-This endpoint will return 'true' if the International Space Station is currently visible, and 'false' if it is not
+This endpoint will return ```true``` if the International Space Station is currently visible, and ```false``` if it is not
 
 ## Documentation
 Documentation of all endpoints can be viewed from the Swagger UI here
@@ -79,7 +79,7 @@ http://localhost:8080/v2/api-docs
 ```
 
 ## Future features
-- [ ] Implement better UI for response. Instead of 'true' or 'false' it would say "YES! The International Space Station is currently visible above Australia".
+- [ ] Implement better UI for response. Instead of ```true``` or ```false``` it would say "YES! The International Space Station is currently visible above Australia".
 - [ ] Report the cloud coverage and the time of day for where the ISS is currently positioned over
 - [ ] Add POST endpoint to add key for weather API key to service
 - [ ] Make application configurations external
