@@ -30,6 +30,12 @@ public class WeatherData {
         return calculator.getOfficialSunsetForDate(Calendar.getInstance());
     }
 
+    public String getSunRiseTime() {
+        Location location = new Location(getLatitude(), getLongitude());
+        SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, getTimeZone());
+        return calculator.getOfficialSunriseForDate(Calendar.getInstance());
+    }
+
     public Double getCloudCoverage() {
         return Double.parseDouble(weatherDataList.get(0).get(WeatherKeys.CLOUDS).toString());
     }
@@ -52,15 +58,18 @@ public class WeatherData {
      * @return true if zoned time is greater than sunset time.
      */
     public boolean isAfterSunSet() {
-        DateTimeFormatter sunsetTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter sunSetSunRiseTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         ZonedDateTime localZonedDateTime = LocalDateTime.now().atZone(ZoneId.systemDefault());
         ZonedDateTime zonedDateTime = localZonedDateTime.withZoneSameInstant(ZoneId.of(getTimeZone()));
 
-        LocalTime zonedSunSetTime = LocalTime.parse(getSunSetTime(), sunsetTimeFormatter);
+        LocalTime zonedSunSetTime = LocalTime.parse(getSunSetTime(), sunSetSunRiseTimeFormatter);
+        LocalTime zonedSunRiseTime = LocalTime.parse(getSunRiseTime(), sunSetSunRiseTimeFormatter);
+
         LocalTime zonedTime = getHourMinuteTime(zonedDateTime.getHour(), zonedDateTime.getMinute());
 
-        return zonedTime.compareTo(zonedSunSetTime) >= 1;
+        // Must be after sunset and before sunrise.
+        return zonedTime.compareTo(zonedSunSetTime) >= 1 || zonedTime.compareTo(zonedSunRiseTime) < 0;
     }
 
     /**

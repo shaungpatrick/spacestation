@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.api</groupId>
 	<artifactId>spacestation</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>spacestation</name>
 	<description>API to get information from the International Space Station</description>
 	<properties>
@@ -75,8 +75,8 @@
 			<artifactId>junit-vintage-engine</artifactId>
 			<version>5.4.2</version>
 		</dependency>
-		<dependency>
 
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.4.2</version>
@@ -93,14 +93,14 @@
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-module-junit4</artifactId>
-			<version>2.0.2</version>
+			<version>2.0.9</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito2</artifactId>
-			<version>2.0.2</version>
+			<version>2.0.9</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -140,6 +140,7 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.5.9</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>

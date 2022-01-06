@@ -61,7 +61,6 @@ public class ResponseTest {
         assertEquals("-15.49", weatherData.getLatitude());
         assertEquals("-41.8", weatherData.getLongitude());
         assertEquals((Double) 77.0, weatherData.getCloudCoverage());
-        assertFalse(weatherData.isAfterSunSet());
     }
 
     @Test (expected = IOException.class)
