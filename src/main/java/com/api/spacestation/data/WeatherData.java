@@ -25,15 +25,11 @@ public class WeatherData {
     }
 
     public String getSunSetTime() {
-        Location location = new Location(getLatitude(), getLongitude());
-        SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, getTimeZone());
-        return calculator.getOfficialSunsetForDate(Calendar.getInstance());
+        return getSunriseSunsetCalculator().getOfficialSunsetForDate(Calendar.getInstance());
     }
 
     public String getSunRiseTime() {
-        Location location = new Location(getLatitude(), getLongitude());
-        SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, getTimeZone());
-        return calculator.getOfficialSunriseForDate(Calendar.getInstance());
+        return getSunriseSunsetCalculator().getOfficialSunriseForDate(Calendar.getInstance());
     }
 
     public Double getCloudCoverage() {
@@ -81,6 +77,16 @@ public class WeatherData {
      */
     private LocalTime getHourMinuteTime(int hour, int minute) {
         return LocalTime.parse(String.format("%02d", hour) + ":" + String.format("%02d", minute));
+    }
+
+    /**
+     * Create new SunriseSunsetCalculator object.
+     *
+     * @return new SunriseSunsetCalculator
+     */
+    private SunriseSunsetCalculator getSunriseSunsetCalculator() {
+        Location location = new Location(getLatitude(), getLongitude());
+        return new SunriseSunsetCalculator(location, getTimeZone());
     }
 
 }
