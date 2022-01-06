@@ -47,9 +47,6 @@ public class SpaceStationService {
         boolean isAfterSunSet = weatherData.isAfterSunSet();
         double cloudCoverage = weatherData.getCloudCoverage();
 
-        System.out.println("Clouds=" + cloudCoverage);
-        System.out.println("IsAfterSunSet=" + isAfterSunSet);
-
         return cloudCoverage <= 30.0 && isAfterSunSet;
     }
 }
